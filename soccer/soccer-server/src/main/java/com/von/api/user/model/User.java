@@ -29,7 +29,7 @@ public class User extends BaseEntity{
     private String job;
 
 
-    @OneToMany(mappedBy = "user_id", cascade = CascadeType.REMOVE) // orphanRemoval = flase가 default
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.REMOVE) // orphanRemoval = flase가 default
     private List<Article> articles;
 
 

@@ -44,6 +44,7 @@ export const getAllBoards = (state: any) => {
     return state.board.array;
 }
 export const getBoardById = (state: any) => state.board.array
+export const getSingleBoard = (state: any) => state.board.json
 
 export const {}= boardSlice.actions
 // export const getSlice = (state: any)=> state.board.value

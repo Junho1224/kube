@@ -25,7 +25,7 @@ public class Board extends BaseEntity{
     private String title;
     private String description;
 
-    @OneToMany(mappedBy ="board_id", cascade = CascadeType.REMOVE) // fetch = FetchType.LAZY LAZY가 default값  orphanRemoval = flase
+    @OneToMany(mappedBy ="board", cascade = CascadeType.REMOVE) // fetch = FetchType.LAZY LAZY가 default값  orphanRemoval = flase
     private List<Article> articles;
 
 }

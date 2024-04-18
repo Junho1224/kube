@@ -3,7 +3,6 @@ package com.von.api.user;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,12 +10,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import com.von.api.common.component.MessengerVO;
-import com.von.api.user.model.User;
 import com.von.api.user.model.UserDTO;
-import com.von.api.user.repository.UserRepository;
 import com.von.api.user.service.UserServiceImpl;
 
-import java.sql.SQLException;
 import java.util.*;
 
 
@@ -34,9 +30,9 @@ public class UserController {
 
 
 
-    @PostMapping(path = "/join")
+    @PostMapping(path = "/save")
     public ResponseEntity<MessengerVO> save(@RequestBody UserDTO dto) {
-        log.info("join-입력받은 정보 : {}", dto);
+        log.info("save-입력받은 정보 : {}", dto);
         return ResponseEntity.ok(service.save(dto));
     }
 

@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository repository;
 
+
     @Override
     public MessengerVO save(ArticleDTO t){
         entityToDto(repository.save(dtoToEntity(t)));
@@ -62,6 +63,14 @@ public class ArticleServiceImpl implements ArticleService {
     public Optional<ArticleDTO> findById(Long id) {
         return repository.findById(id).map(this::entityToDto);
     }
+
+    @Override
+    public List<ArticleDTO> myList(Long id) {
+        return repository.getArticlesByBoardId(id).stream().map(i->entityToDto(i)).toList();
+        
+    }
+
+
 
    
     

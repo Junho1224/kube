@@ -1,11 +1,8 @@
 package com.von.api.article;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.ArrayList;
 
 
 
@@ -18,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.von.api.article.model.ArticleDTO;
-import com.von.api.article.service.ArticleService;
+import com.von.api.article.repository.ArticleRepository;
 import com.von.api.article.service.ArticleServiceImpl;
 import com.von.api.common.component.MessengerVO;
 import com.von.api.common.component.PageRequestVO;
@@ -32,12 +29,13 @@ import com.von.api.common.component.PageRequestVO;
 @RequiredArgsConstructor
 @Slf4j
 public class ArticleController {
-    private final ArticleService service;
+    private final ArticleServiceImpl service;
+    private final ArticleRepository repository;
 
-    @PostMapping(path = "")
-    public ResponseEntity<MessengerVO> save(PageRequestVO vo) throws SQLException {
-        service.save(null);
-        return ResponseEntity.ok(new MessengerVO());
+    @PostMapping(path = "/save")
+    public ResponseEntity<MessengerVO> save(@RequestBody ArticleDTO dto) {
+        log.info("save-입력받은 정보 : {}", dto);
+        return ResponseEntity.ok(service.save(dto));
     }
     @DeleteMapping(path = "/delete")
     public ResponseEntity<MessengerVO> deleteById(@RequestParam Long id) {
@@ -66,4 +64,13 @@ public class ArticleController {
         service.existById(0L);
         return ResponseEntity.ok(new MessengerVO());
     }
+
+    @GetMapping(path = "/mylist/{id}")
+    public ResponseEntity<List<ArticleDTO>> getArticlesByBoardId(@PathVariable long id) throws SQLException {
+        log.info("입력받은 정보 : {}");
+        return ResponseEntity.ok(service.myList(id));
+    }
+
+    
+    
 }

@@ -10,6 +10,7 @@ import com.von.api.common.service.QueryService;
 
 
 public interface ArticleService extends CommandService<ArticleDTO>, QueryService<ArticleDTO>{
+    List<ArticleDTO> myList(Long id);
 
     default Article dtoToEntity(ArticleDTO dto){    //dto 를 entity로 바꾸는 것
         return Article.builder()
@@ -22,7 +23,7 @@ public interface ArticleService extends CommandService<ArticleDTO>, QueryService
     default ArticleDTO entityToDto(Article ent){ //entity 를 dto로 바꾸는 것
         return ArticleDTO.builder()
         .id(ent.getId())
-        .title(ent.getTitle())
+        .title(ent.getTitle()) 
         .content(ent.getContent())
         .build();
     }

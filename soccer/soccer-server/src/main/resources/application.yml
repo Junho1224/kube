@@ -3,7 +3,8 @@ spring:
     name: api
   datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql:// 3.36.36.129:3306/vondb?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+      url: jdbc:mysql:// 3.36.36.129:3306/vondb?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+      
       username: root
       password: root
   sql:
@@ -24,7 +25,7 @@ spring:
         '[format_sql]': true
     show-sql: true
     defer-datasource-initialization : true
-    open-in-view : false   
+    # open-in-view : false   
 logging:
   level:
     org:

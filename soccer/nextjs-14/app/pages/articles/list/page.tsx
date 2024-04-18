@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllArticles } from "@/app/components/articles/service/article.slice";
 import { DataGrid } from "@mui/x-data-grid";
 import Columns from "@/app/components/articles/module/columns";
+import MoveButton from "@/app/atoms/button/MoveButton";
+import { PG } from "@/app/components/common/enums/PG";
 
 
 
@@ -25,7 +27,8 @@ const ArticlesPage: NextPage = ({ data }: any) => {
 
 
     return (<>
-        <h2>게시판 목록</h2>
+
+        <h2>게시글 목록</h2>
         <Box sx={{ height: 400, width: '100%' }}>
      {allArticles && <DataGrid
         rows={allArticles}
@@ -42,6 +45,15 @@ const ArticlesPage: NextPage = ({ data }: any) => {
         disableRowSelectionOnClick
       />}
     </Box>
+    <thead>
+      <tr>
+        <td>
+          <MoveButton text={"글쓰기"} path={`${PG.ARTICLE}/save`} />
+        </td>
+      </tr>
+     </thead>
+
+
     </>)
 }
 

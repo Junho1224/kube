@@ -7,9 +7,12 @@ import { NextPage } from "next";
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from "next/navigation";
 import { IUser } from './components/users/model/user';
-import { getAuth } from './components/users/service/user.slice';
-import { login } from './components/users/service/user.service';
-import {setCookie, parseCookies, destroyCookie} from 'nookies'
+import { getAuth, getexistsUsername } from './components/users/service/user.slice';
+import { existsUsername, login } from './components/users/service/user.service';
+import { setCookie, parseCookies, destroyCookie } from 'nookies'
+import { jwtDecode } from 'jwt-decode';
+import { PG } from './components/common/enums/PG';
+
 
 
 
@@ -21,13 +24,37 @@ export default function Home() {
     const auth = useSelector(getAuth)
 
     const [user, setUser] = useState({} as IUser)
+    const [isWrongId, setIsWrongId] = useState(false);
+    const [isTrueId, setIsTrueId] = useState(false);
+    const [isWrongPw, setisWrongPw] = useState(false);
+    const [len, setLen] = useState('');
+
+    const message = useSelector(getexistsUsername)
+
+    const ID_CHECK = /^[a-zA-Z][a-zA-Z0-9]{5,19}$/;
+    const PW_CHECK = /^(?=.*[a-zA-Z])(?=.*[\W_])(?=.*[0-9]).{6,15}$/;
 
     const handleuserName = (e: any) => {
-        setUser({
-            ...user,
-            username: e.target.value
-        });
+
+        setLen(e.target.value)
+
+
+
+        if (ID_CHECK.test(len)) {
+            setIsWrongId(false)
+            setIsTrueId(true)
+            setUser({ ...user, username: len });
+        } else {
+            console.log(
+                "잘못된 형식의 아이디입니다. 영어 소문자로 시작하는 6 ~ 20 자의 영어 소문자 또는 숫자로 입력해주세요."
+            );
+            setIsWrongId(true);
+            setIsTrueId(false);
+        }
+        
     }
+
+
     const handlepw = (e: any) => {
         setUser({
             ...user,
@@ -35,23 +62,34 @@ export default function Home() {
         });
     }
 
+
     const handlesubmit = () => {
-        console.log('user ...'+JSON.stringify(user))
-        dispatch(login(user));  // 타입 어설션 사용
+        dispatch(existsUsername(user.username))
+        // dispatch(login(user));  // 타입 어설션 사용
 
     };
 
+
+
     useEffect(() => {
-        if (auth.message === 'SUCCESS') {
-            setCookie({},'message',auth.message,{httpOnly: false, path: '/'})
-            setCookie({},'token',auth.token,{httpOnly: false, path: '/'})
-            console.log('서버에서 넘어온 메시지' + parseCookies().message)
-            console.log('서버에서 넘어온 토큰' + parseCookies().token) 
-            router.push('/pages/boards/card')
+        if (message !== undefined) {
+            console.log("22" + message.message);
         } else {
-            console.log('LOGIN FAIL')
+            console.log("33" + message)
         }
-    }, [auth])
+        // if (auth.message === 'SUCCESS') {
+        //     setCookie({}, 'message', auth.message, { httpOnly: false, path: '/' })
+        //     setCookie({}, 'token', auth.token, { httpOnly: false, path: '/' })
+        //     console.log('서버에서 넘어온 메시지' + parseCookies().message)
+        //     console.log('서버에서 넘어온 토큰' + parseCookies().token)
+        //     console.log('토큰을 디코드한 내용')
+
+        //     console.log(jwtDecode<any>(parseCookies().token)) //?.username
+        //     router.push('/pages/boards/card')
+        // } else {
+        //     console.log('LOGIN FAIL')
+        // }
+    }, [handlesubmit])
 
     return (
         <div className='text-center'>
@@ -67,13 +105,16 @@ export default function Home() {
                                 style={{
                                     backgroundImage: `url(https://www.tailwindtap.com//assets/components/form/userlogin/login_tailwindtap.jpg)`,
                                 }}
-                            ></div>
+                            >
+                            </div>
+
                             <div className="w-full p-8 lg:w-1/2">
                                 <p className="text-xl text-gray-600 text-center">Welcome back!</p>
                                 <div className="mt-4">
 
                                     <label className="block text-gray-700 text-sm font-bold mb-2">
-                                        Email Address
+                                        username : Century
+
                                     </label>
                                     <input
                                         className="text-gray-700 border border-gray-300 rounded py-2 px-4 block w-full focus:outline-2 focus:outline-blue-700"
@@ -82,10 +123,28 @@ export default function Home() {
                                         required
                                     />
                                 </div>
+                                {isWrongId && (<pre>
+                                    <h6 className='text-red-500'>
+                                        잘못된 아이디 입니다.
+                                    </h6>
+
+                                </pre>)}
+                                {isTrueId && (<pre>
+                                    <h6 className='text-green-500'>
+                                        올바른 아이디 입니다.
+                                    </h6>
+
+                                </pre>)}
+                                {isWrongPw && (<pre>
+                                    <h6 className='text-red-500'>
+                                        잘못된 비밀번호 입니다.
+                                    </h6>
+
+                                </pre>)}
                                 <div className="mt-4 flex flex-col justify-between">
                                     <div className="flex justify-between">
                                         <label className="block text-gray-700 text-sm font-bold mb-2">
-                                            Password
+                                            Password :qI7,sxt
                                         </label>
                                     </div>
                                     <input
@@ -149,14 +208,18 @@ export default function Home() {
                                         Don&apos;t have any account yet?
                                         <span className="text-blue-700"> Sign Up</span>
                                     </Link>
+
                                 </div>
                             </div>
                         </div>
                     </div>
 
                 </div>
+
                 <br />
             </>
         </div>
     );
+
+
 }

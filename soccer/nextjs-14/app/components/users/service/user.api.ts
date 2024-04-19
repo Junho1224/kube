@@ -81,5 +81,16 @@ export const loginAPI = async(user:IUser) => {
     }
 }
 
+export const existsUsernameAPI = async (username: string) => {
+    try {
+      const response = await instance.get("/users/exits-username", {
+        params: { username },
+      });
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+  };
+
 
 

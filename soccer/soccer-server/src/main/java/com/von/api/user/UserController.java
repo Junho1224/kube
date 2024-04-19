@@ -80,10 +80,12 @@ public class UserController {
         return ResponseEntity.ok(service.login(param));
     }
 
-    
+    @GetMapping(path = "/exits-Username")
+    public ResponseEntity<MessengerVO> exitsUsername(@RequestParam("username") String username) {
+        log.info("입력받은 정보 : {}", username);
+        return ResponseEntity.ok(service.exitsUsername(username));
+    }
 
 
-    
-    
 }
 

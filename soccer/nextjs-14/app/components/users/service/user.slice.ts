@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { findAllUsers, findUserById, modifyUserById, deleteUserById, countUser, login } from "./user.service";
+import { findAllUsers, findUserById, modifyUserById, deleteUserById, countUser, login, existsUsername } from "./user.service";
 import { IUser } from "../model/user";
 
 const status = {
@@ -46,6 +46,7 @@ export const userSlice = createSlice({
         builder
             .addCase(findAllUsers.fulfilled, handleFulfilledarr)
             .addCase(findUserById.fulfilled, handleFulfilledjson)
+            .addCase(existsUsername.fulfilled, handleFulfilledjson)
             .addCase(deleteUserById.fulfilled, handleFulfilledarr)
             .addCase(modifyUserById.fulfilled, handleFulfilledarr)
             .addCase(login.fulfilled, (state: any, { payload }: any) => { state.auth = payload })
@@ -60,6 +61,7 @@ export const getAllUsers = (state: any) => {
     return state.user.array;
 }
 export const getUserById = (state: any) => (state.user.json) // 
+export const getexistsUsername = (state: any) => (state.user.auth) // 
 export const getdeleteUserById = (state: any) => (state.user.array) // 
 export const getModifyUserById = (state: any) => (state.user.array) // 
 export const getCountUser = (state: any) => (state.user.count) // 

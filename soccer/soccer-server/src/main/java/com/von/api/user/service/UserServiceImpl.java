@@ -7,12 +7,16 @@ import com.von.api.user.model.UserDTO;
 import com.von.api.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -110,16 +114,36 @@ public class UserServiceImpl implements UserService {
         return repository.findByUsername(username);
     }
 
-    //단일책임원칙(SRP)에 따라 아이디 존재여부를 프론트에서 먼저 판단하고, 넘어옴 (시큐리티)
+    // 단일책임원칙(SRP)에 따라 아이디 존재여부를 프론트에서 먼저 판단하고, 넘어옴 (시큐리티)
+    @Transactional
     @Override
-    public MessengerVO login(UserDTO param) {
-        boolean flag = repository.findByUsername(param.getUsername()).get().getPassword().equals(param.getPassword());
+    public MessengerVO login(UserDTO dto) {
+        User user = repository.findByUsername(dto.getUsername()).get();
+        String token = jwtProvider.createToken(entityToDto(user));
+        boolean flag = user.getPassword().equals(dto.getPassword());
+        // boolean flag = user.getPassword().passwordEncoder.matches(dto.getPassword());
+
+        // 토큰을 각 섹션(Header, Payload, Signature)으로 분할
+        String[] chunks = token.split("\\.");
+        Base64.Decoder decoder = Base64.getUrlDecoder();
+
+        String header = new String(decoder.decode(chunks[0]));
+        String payload = new String(decoder.decode(chunks[1]));
+
+        log.info("Token Header : " + header);
+        log.info("Token Header : " + payload);
 
         return MessengerVO.builder()
                 .message(flag ? "SUCCESS" : "FAILURE")
-                .token(flag ? jwtProvider.createToken(param) : "None")
+                .token(flag ? token : "None")
                 .build();
+    }
+
+    @Override
+    public MessengerVO exitsUsername(String username) {
+        return MessengerVO.builder().message(repository.findByUsername(username).isPresent() ? "True" : "FAILURE").build();
 
     }
 
+   
 }

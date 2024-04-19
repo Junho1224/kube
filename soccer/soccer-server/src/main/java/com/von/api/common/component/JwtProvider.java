@@ -40,7 +40,7 @@ public class JwtProvider  {
         String token = Jwts.builder()
         .issuer(issuer)
         .signWith(secretKey)
-        .expiration(new Date(System.currentTimeMillis()+24*60*60*1000))
+        .expiration(Date.from(expiredDate))
         .subject("von")
         .claim("username", dto.getUsername())
         .claim("job", dto.getJob())

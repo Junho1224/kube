@@ -19,7 +19,7 @@ insert into users (id, username, password, email, name, phone, job) VALUES (15, 
 
 
 insert into boards (id, title, description) values (1, 'QnA', 'a01');
-insert into boards (id, title, description) VALUES (2, '리뷰게시판', 'a01');
+insert into boards (id, title, description) VALUES (2, 'Review', 'a01');
 
 
 insert into articles (id, board_id, user_id, content, title) values (8025, 1, 15, '정기회의 회기는 100일을, 임시회의 회기는 30일을 초과할 수 없다.

@@ -1,11 +1,11 @@
-export interface IArticle{
+export default interface IArticle{
     id? : number
     title? : string
     content? : string
-    writer? : string
-    board? : string
+    writerId? : number
+    boardId? : number
     regDate? : string
     modDate? : string
-    array?: []
-    
+    json?: {}
+    array?: IArticle[]
 }

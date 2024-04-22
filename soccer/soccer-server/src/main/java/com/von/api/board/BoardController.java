@@ -17,7 +17,7 @@ import com.von.api.board.model.BoardDTO;
 import com.von.api.board.service.BoardService;
 import com.von.api.board.service.BoardServiceImpl;
 import com.von.api.common.component.MessengerVO;
-import com.von.api.common.component.PageRequestVO;
+import com.von.api.common.component.pagination.PageRequestVO;
 
 import lombok.RequiredArgsConstructor;
 

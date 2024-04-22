@@ -1,4 +1,4 @@
-package com.von.api.common.component;
+package com.von.api.common.component.pagination;
 
 
 import org.springframework.data.domain.PageRequest;

@@ -11,18 +11,17 @@ import org.springframework.stereotype.Repository;
 
 import com.von.api.user.model.User;
 
-
 @Repository
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUsername(String username);
 
-     //JPQL Default
-     @Modifying
-     @Query("select a from users a where a.id = :id")
-     public void modifyTokenById(@Param("id") Long id);
- 
+    // JPQL Default
+    @Modifying
+    @Query("select a from users a where a.id = :id")
+    public void modifyTokenById(@Param("id") Long id);
 
+    @Query("select count(id) as count from users where username = :username")
+    Integer existsUsername(@Param("username") String username);
 
-    
-} 
+}

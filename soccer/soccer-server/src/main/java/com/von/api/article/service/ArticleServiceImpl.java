@@ -5,7 +5,7 @@ import com.von.api.article.model.ArticleDTO;
 import com.von.api.article.repository.ArticleRepository;
 import com.von.api.common.AbstractService;
 import com.von.api.common.component.MessengerVO;
-import com.von.api.common.component.PageRequestVO;
+import com.von.api.common.component.pagination.PageRequestVO;
 
 import lombok.RequiredArgsConstructor;
 

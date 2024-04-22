@@ -1,7 +1,7 @@
 package com.von.api.user.service;
 
-import com.von.api.common.component.JwtProvider;
 import com.von.api.common.component.MessengerVO;
+import com.von.api.common.component.security.JwtProvider;
 import com.von.api.user.model.User;
 import com.von.api.user.model.UserDTO;
 import com.von.api.user.repository.UserRepository;
@@ -118,32 +118,27 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public MessengerVO login(UserDTO dto) {
+        log.info("로그인 서비스로 들어온 파라미터 : " + dto);
         User user = repository.findByUsername(dto.getUsername()).get();
-        String token = jwtProvider.createToken(entityToDto(user));
+        String accessToken = jwtProvider.createToken(entityToDto(user));
         boolean flag = user.getPassword().equals(dto.getPassword());
-        // boolean flag = user.getPassword().passwordEncoder.matches(dto.getPassword());
+        // passwordEncoder.matches
 
         // 토큰을 각 섹션(Header, Payload, Signature)으로 분할
-        String[] chunks = token.split("\\.");
-        Base64.Decoder decoder = Base64.getUrlDecoder();
-
-        String header = new String(decoder.decode(chunks[0]));
-        String payload = new String(decoder.decode(chunks[1]));
-
-        log.info("Token Header : " + header);
-        log.info("Token Header : " + payload);
+        jwtProvider.getPayload(accessToken);
 
         return MessengerVO.builder()
                 .message(flag ? "SUCCESS" : "FAILURE")
-                .token(flag ? token : "None")
+                .accessToken(flag ? accessToken : "None")
                 .build();
     }
 
-    @Override
-    public MessengerVO exitsUsername(String username) {
-        return MessengerVO.builder().message(repository.findByUsername(username).isPresent() ? "True" : "FAILURE").build();
+    
 
+    @Override
+    public Boolean existsUsername(String username) {
+        Integer count = repository.existsUsername(username);
+        return count == 1;
     }
 
-   
 }

@@ -17,7 +17,8 @@ public class MessengerVO {
 
     private String message;
     private int status;
-    private String token;
+    private String accessToken;
+    private String refreshToken;
 
 
 }

@@ -1,4 +1,4 @@
-package com.von.api.common.component;
+package com.von.api.common.component.files;
 
 import org.springframework.stereotype.Component;
 

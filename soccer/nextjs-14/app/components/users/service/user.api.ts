@@ -1,4 +1,4 @@
-import { instance } from "@/app/components/common/configs/axios-config"
+import instance from "@/app/components/common/configs/axios-config"
 import { IUser } from "../model/user"
 
 
@@ -70,6 +70,7 @@ export const modifyUserByIdAPI = async (all: IUser)=>{
 }
 
 export const loginAPI = async(user:IUser) => {
+    console.log(` 로그인API 에 넘어온 파라미터 : ${JSON.stringify(user)}`)
     try{
         const response = await instance.post('/users/login',user)
         return response.data
@@ -82,15 +83,19 @@ export const loginAPI = async(user:IUser) => {
 }
 
 export const existsUsernameAPI = async (username: string) => {
-    try {
-      const response = await instance.get("/users/exits-username", {
-        params: { username },
-      });
-      return response.data;
-    } catch (error) {
-      return error;
+    try{
+        const response = await instance.get('/users/exists-username',{params: {username}})
+        console.log('existsUsernameAPI 결과: '+ response.data)
+        return response.data
+    }catch(error){
+        console.log(error)
+        return error
     }
-  };
-
-
-
+}
+export const logoutAPI = async ()=>{
+    try{
+      const response = await instance.get("/users/logout", {params: {}})
+      console.log('로그아웃 결과 : '+response)
+      return response.data;
+    }catch(error){return error}
+  }

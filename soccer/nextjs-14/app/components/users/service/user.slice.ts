@@ -17,7 +17,8 @@ interface IAuth {
 interface UserState {
     array?: Array<IUser>,
     json?: IUser,
-    auth?: IAuth
+    auth?: IAuth,
+    existsUsername?: boolean
 
 
 }
@@ -25,7 +26,8 @@ interface UserState {
 export const initialState: UserState = {
     json: {} as IUser,
     array: [],
-    auth: {} as IAuth
+    auth: {} as IAuth,
+    existsUsername: false
 
 }
 
@@ -46,11 +48,11 @@ export const userSlice = createSlice({
         builder
             .addCase(findAllUsers.fulfilled, handleFulfilledarr)
             .addCase(findUserById.fulfilled, handleFulfilledjson)
-            .addCase(existsUsername.fulfilled, handleFulfilledjson)
             .addCase(deleteUserById.fulfilled, handleFulfilledarr)
             .addCase(modifyUserById.fulfilled, handleFulfilledarr)
             .addCase(login.fulfilled, (state: any, { payload }: any) => { state.auth = payload })
             .addCase(countUser.fulfilled, (state: any, { payload }: any) => { state.count = payload })
+            .addCase(existsUsername.fulfilled,  (state: any, {payload}: any) => {state.existsUsername=payload})
                 //자바로 해석하자면 swich case() findUserById.fulfilled면 handleFulfilled 실행
     }
 })
@@ -61,7 +63,7 @@ export const getAllUsers = (state: any) => {
     return state.user.array;
 }
 export const getUserById = (state: any) => (state.user.json) // 
-export const getexistsUsername = (state: any) => (state.user.auth) // 
+export const getExistsUsername = (state: any) =>(state.user.existsUsername)
 export const getdeleteUserById = (state: any) => (state.user.array) // 
 export const getModifyUserById = (state: any) => (state.user.array) // 
 export const getCountUser = (state: any) => (state.user.count) // 

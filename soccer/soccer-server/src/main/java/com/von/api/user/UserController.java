@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping(path = "/detail")
-    public ResponseEntity<Optional<UserDTO>> findById(@RequestParam Long id) {
+    public ResponseEntity<Optional<UserDTO>> findById(@RequestParam("id") Long id) {
         log.info("입력받은 정보 : {}", id );
         return ResponseEntity.ok(service.findById(id));
     }
@@ -57,7 +57,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<MessengerVO> deleteById(@RequestParam Long id) {
+    public ResponseEntity<MessengerVO> deleteById(@RequestParam("id") Long id) {
         log.info("입력받은 정보 : {}", id );
         return ResponseEntity.ok(service.deleteById(id));
     }
@@ -74,16 +74,21 @@ public class UserController {
         return ResponseEntity.ok(service.findUsersByName(param.getName()));
     }
     
-    @PostMapping(path = "/login")
+    @PostMapping("/login")
     public ResponseEntity<MessengerVO> login(@RequestBody UserDTO param) {
-       log.info("입력받은 정보 : {}", param );
-        return ResponseEntity.ok(service.login(param));
+        log.info("::: login controller parameter ",param);
+        MessengerVO messenger = service.login(param);
+        return ResponseEntity.ok(messenger);
     }
 
-    @GetMapping(path = "/exits-Username")
-    public ResponseEntity<MessengerVO> exitsUsername(@RequestParam("username") String username) {
-        log.info("입력받은 정보 : {}", username);
-        return ResponseEntity.ok(service.exitsUsername(username));
+  
+
+    @GetMapping("/exists-username")
+    public ResponseEntity<Boolean> existsUsername(@RequestParam("username") String username) {
+        log.info("existsUsernam 파라미터 정보 : "+username);
+        Boolean flag = service.existsUsername(username);
+        log.info("existsUsernam 결과 : "+flag);
+        return ResponseEntity.ok(flag);
     }
 
 

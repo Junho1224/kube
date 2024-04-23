@@ -40,13 +40,11 @@ public class BoardController {
 
     @DeleteMapping(path = "/delete")
     public ResponseEntity<MessengerVO> deleteById(@RequestParam Long id) {
-        log.info("입력받은 정보 : {}", id );
         return ResponseEntity.ok(service.deleteById(id));
     }
 
     @GetMapping("list")
     public ResponseEntity<List<BoardDTO>> findAll(PageRequestVO vo) throws SQLException {
-        log.info("입력받은 정보 : {}" );
         return ResponseEntity.ok(service.findAll());
     }
 
@@ -64,7 +62,6 @@ public class BoardController {
 
     @GetMapping(path = "/exists/{id}")
     public ResponseEntity<MessengerVO> existById(@PathVariable long id) {
-        service.existById(0L);
         return ResponseEntity.ok(new MessengerVO());
     }
 }

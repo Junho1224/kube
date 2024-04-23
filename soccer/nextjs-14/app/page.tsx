@@ -66,6 +66,7 @@ export default function Home() {
     console.log('user ...' + JSON.stringify(user))
     dispatch(existsUsername(user.username))
       .then((res: any) => {
+        console.log(res.payload)
         if (res.payload == true) {
           dispatch(login(user))
             .then((resp: any) => {
@@ -78,6 +79,7 @@ export default function Home() {
                 console.log('서버에서 넘어온 토큰 2 ' + parseCookies().accessToken)
                 console.log('토큰을 디코드한 내용 : ')
                 console.log(jwtDecode<any>(parseCookies().accessToken))
+                
                 router.push('/pages/boards/list')
             })
             .catch((err: any) => {
@@ -234,7 +236,7 @@ export default function Home() {
             </a>
             <div className="mt-4 flex items-center w-full text-center">
               <Link
-                href="/pages/user/join"
+                href="/pages/users/join"
                 className="text-xs text-gray-500 capitalize text-center w-full"
               >
                 Don&apos;t have any account yet?

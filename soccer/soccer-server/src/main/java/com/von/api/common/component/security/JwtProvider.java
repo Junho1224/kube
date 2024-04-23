@@ -21,10 +21,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.von.api.user.model.UserDTO;
+import com.von.api.user.repository.UserRepository;
 
 @Log4j2
 @Component
 public class JwtProvider  {
+ 
+    
     @Value("${jwt.iss}")
     private String issuer;
 
@@ -46,7 +49,7 @@ public class JwtProvider  {
         .subject("von")
         .claim("username", dto.getUsername())
         .claim("job", dto.getJob())
-        .claim("userId", dto.getId())
+        .claim("userId", dto.getId()) //?
         .compact();
         ;
 
@@ -57,17 +60,13 @@ public class JwtProvider  {
 
 
     public String extractTokenFromHeader(HttpServletRequest request) {
+        log.info("프론트에서 넘어온 Request 값 : {}"+ request.getServletPath());
         String bearerToken = request.getHeader("Authorization");
-
-        if (bearerToken != null && bearerToken.startsWith("bearer ")){
-            return bearerToken.substring(7);
-        }
-
-        return null;
-
+        log.info("프론트에서 넘어온 토큰 값 : {}"+ bearerToken);
+        return bearerToken != null && bearerToken.startsWith("Bearer ") ? bearerToken.substring(7) : "undefined";
     }
-
-    public String getPayload(String accessToken) {
+    
+    public void printPayload(String accessToken) {
         String[] chunks = accessToken.split("\\.");
         Base64.Decoder decoder = Base64.getUrlDecoder();
 
@@ -77,11 +76,14 @@ public class JwtProvider  {
         log.info("Token Header : " + header);
         log.info("Token payload : " + payload);
 
-        // return new StringBuilder().append(header).append(payload).toString();
-        return payload;
+      
 
     }
 
+
+    public Claims getPayload(String token) {
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
+    }
   
     
     

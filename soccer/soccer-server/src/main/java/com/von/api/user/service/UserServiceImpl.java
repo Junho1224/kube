@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
         // passwordEncoder.matches
 
         // 토큰을 각 섹션(Header, Payload, Signature)으로 분할
-        jwtProvider.getPayload(accessToken);
+        jwtProvider.printPayload(accessToken);
 
         return MessengerVO.builder()
                 .message(flag ? "SUCCESS" : "FAILURE")
@@ -140,5 +140,12 @@ public class UserServiceImpl implements UserService {
         Integer count = repository.existsUsername(username);
         return count == 1;
     }
+
+    @Override
+    public Boolean logout(Long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'logout'");
+    }
+
 
 }

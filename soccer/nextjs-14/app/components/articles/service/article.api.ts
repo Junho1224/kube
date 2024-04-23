@@ -3,7 +3,7 @@ import instance from "@/app/components/common/configs/axios-config"
 
 export const findAllArticlesAPI = async (page: number)=>{ //axios
     try{
-        const response = await instance.get('articles/list',{
+        const response = await instance().get('articles/list',{
             params: {page, limit: 10}
         })
         return response.data
@@ -16,7 +16,7 @@ export const findAllArticlesAPI = async (page: number)=>{ //axios
 }
 export const findArticleByIdAPI = async (id: number)=>{ //axios
     try{
-        const response = await instance.get('/articles/detail',{
+        const response = await instance().get('/articles/detail',{
             params: {id}
         })
         return response.data

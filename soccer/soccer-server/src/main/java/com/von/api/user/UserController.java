@@ -95,8 +95,7 @@ public class UserController {
     public ResponseEntity<Boolean> logout(@RequestHeader("Authorization") String accessToken) {
 
         log.info("logout request : {}", accessToken);
-        Long id = 1L;
-        Boolean flag = service.logout(id);
+        Boolean flag = service.logout(accessToken);
         return ResponseEntity.ok(flag);
     }
 

@@ -1,13 +1,13 @@
 -- select * from board_ids;
 
-insert into users (id, username, password, email, name, phone, job) values (1, '11', '22', 'ldannel0@ovh.net', '김민준', '18-535-5338', 'VP Sales');
-insert into users (id, username, password, email, name, phone, job) values (2, '33', '44', 'ochoppin1@icq.com', '박서연', '71-768-9366', 'Human Resources Manager');
-insert into users (id, username, password, email, name, phone, job) values (3, 'root', 'root', 'faspland2@so-net.ne.jp', '이지아', '41-584-5630', 'Senior Sales Associate');
-insert into users (id, username, password, email, name, phone, job) values (4, 'von', '1234', 'bsadgrove3@arstechnica.com', '정하윤', '35-418-0746', 'Database Administrator II');
-insert into users (id, username, password, email, name, phone, job) values (5, 'Savana 3500', 'pE0$bgX_|b', 'nledward4@pinterest.com', '최준호', '58-674-6158', 'Structural Engineer');
-insert into users (id, username, password, email, name, phone, job) values (6, 'Impala', 'sC7@J/Py', 'ffullicks5@marriott.com', '유예진', '46-970-3215', 'Associate Professor');
-insert into users (id, username, password, email, name, phone, job) values (7, 'Century', 'qI7,sxt', 'hgerardot6@example.com', '손태양', '65-496-0359', 'Compensation Analyst');
-insert into users (id, username, password, email, name, phone, job) values (8, 'Vandura G2500', 'qA5$~/%c', 'dberrecloth7@uiuc.edu', '안도현', '41-118-4180', 'VP Product Management');
+insert into users (id, username, password, email, name, phone, job) values (1, '11', '22', 'ldannel0@ovh.net', 'MinJun', '18-535-5338', 'VP Sales');
+insert into users (id, username, password, email, name, phone, job) values (2, '33', '44', 'ochoppin1@icq.com', 'Siu', '71-768-9366', 'Human Resources Manager');
+insert into users (id, username, password, email, name, phone, job) values (3, 'root', 'root', 'faspland2@so-net.ne.jp', 'Jia', '41-584-5630', 'Senior Sales Associate');
+insert into users (id, username, password, email, name, phone, job) values (4, 'von', '1234', 'bsadgrove3@arstechnica.com', 'HaYoon', '35-418-0746', 'Database Administrator II');
+insert into users (id, username, password, email, name, phone, job) values (5, 'Savana 3500', 'pE0$bgX_|b', 'nledward4@pinterest.com', 'Junho', '58-674-6158', 'Structural Engineer');
+insert into users (id, username, password, email, name, phone, job) values (6, 'Impala', 'sC7@J/Py', 'ffullicks5@marriott.com', 'YeJin', '46-970-3215', 'Associate Professor');
+insert into users (id, username, password, email, name, phone, job) values (7, 'Century', 'qI7,sxt', 'hgerardot6@example.com', 'Sun', '65-496-0359', 'Compensation Analyst');
+insert into users (id, username, password, email, name, phone, job) values (8, 'Vandura G2500', 'qA5$~/%c', 'dberrecloth7@uiuc.edu', 'Dohyun', '41-118-4180', 'VP Product Management');
 insert into users (id, username, password, email, name, phone, job) values (9, 'A4', 'hN7''Ml}EqE', 'nsmallcomb8@jalbum.net', 'Nancy', '68-343-0366', 'Environmental Tech');
 insert into users (id, username, password, email, name, phone, job) VALUES (10, 'Ram 3500', 'tK3&Svyw.y', 'crelf9@statcounter.com', 'Cornelius', '29-404-8418', 'Project Manager');
 insert into users (id, username, password, email, name, phone, job) VALUES (11, 'Taurus', 'fK0\_Fw0M}KU', 'cturneuxa@ow.ly', 'Conny', '94-100-4993', 'Help Desk Technician');
@@ -18,19 +18,21 @@ insert into users (id, username, password, email, name, phone, job) VALUES (15, 
 
 
 
-insert into boards (id, title, description) values (1, 'QnA', 'a01');
-insert into boards (id, title, description) VALUES (2, 'Review', 'a01');
+insert into boards (id, title,content,description) values (1, 'QnA','Q&A', 'a01');
+insert into boards (id, title,content, description) VALUES (2, 'Review','리뷰게시판', 'a01');
+insert into boards(id,title,content,description) VALUES (3,'Free','자유게시판',"누구나 사용 가능한 게시판")
 
 
-insert into articles (id, board_id, user_id, content, title) values (8025, 1, 15, '정기회의 회기는 100일을, 임시회의 회기는 30일을 초과할 수 없다.
+insert into articles (id, board_id, user_id, content, title) values (8025, 1, 15, 'In the book it said: "Boa constrictors swallow their prey whole, without chewing it. After that they are not able to move, and they sleep through the six months that they need for digestion."
 ', 'Strategic Air Command');
-insert into articles (id, board_id, user_id, content, title) values (3939, 2, 7, '대한민국의 국민이 되는 요건은 법률로 정한다. 모든 국민은 양심의 자유를 가진다.
+insert into articles (id, board_id, user_id, content, title) values (3939, 2, 7, 'I pondered deeply, then, over the adventures of the jungle. And after some work with a colored pencil I succeeded in making my first drawing. My Drawing Number One. It looked something like this:
+
 ', 'Galapagos Affair: Satan Came to Eden, The');
-insert into articles (id, board_id, user_id, content, title) values (5724, 1, 5, '여자의 근로는 특별한 보호를 받으며, 고용·임금 및 근로조건에 있어서 부당한 차별을 받지 아니한다.
+insert into articles (id, board_id, user_id, content, title) values (5724, 1, 5, 'I showed my masterpiece to the grown-ups, and asked them whether the drawing frightened them
 ', 'Favela Rising');
-insert into articles (id, board_id, user_id, content, title) values (9401, 2, 9, '국무회의는 대통령·국무총리와 15인 이상 30인 이하의 국무위원으로 구성한다.
+insert into articles (id, board_id, user_id, content, title) values (9401, 2, 9, 'But they answered: "Frighten? Why should any one be frightened by a hat?"
 ', 'One Nite In Mongkok (Wong gok hak yau)');
-insert into articles (id, board_id, user_id, content, title) values (1030, 1, 8, '국회가 재적의원 과반수의 찬성으로 계엄의 해제를 요구한 때에는 대통령은 이를 해제하여야 한다.
+insert into articles (id, board_id, user_id, content, title) values (1030, 1, 8, 'My drawing was not a picture of a hat. It was a picture of a boa constrictor digesting an elephant. But since the grown-ups were not able to understand it, I made another drawing: I drew the inside of a boaconstrictor, so that the grown-ups could see it clearly. They always need to have things explained. My Drawing Number Two looked like this:
 ', 'Day of the Triffids, The');
 insert into articles (id, board_id, user_id, content, title) values (2166, 2, 4, '국교는 인정되지 아니하며, 종교와 정치는 분리된다. 국가는 모성의 보호를 위하여 노력하여야 한다.
 ', 'Alamo, The');
@@ -214,15 +216,15 @@ insert into articles (id, board_id, user_id, content, title) values (641261, 2, 
 ', 'Went to Coney Island on a Mission From God... Be Back by Five');
 insert into articles (id, board_id, user_id, content, title) VALUES (152971, 2, 8, '헌법개정안이 제2항의 찬성을 얻은 때에는 헌법개정은 확정되며, 대통령은 즉시 이를 공포하여야 한다.
 ', 'Back-up Plan, The');
-insert into articles (id, board_id, user_id, content, title) values (1, 2, 10, '헌법재판소 재판관은 정당에 가입하거나 정치에 관여할 수 없다.
+insert into articles (id, board_id, user_id, content, title) values (1, 2, 10, 'So then I chose another profession, and learned to pilot airplanes. I have flown a little over all parts of the world; and it is true that geography has been very useful to me. At a glance I can distinguish China from Arizona. If one gets lost in the night, such knowledge is valuable.
 ', 'Man Called Sledge, A');
-insert into articles (id, board_id, user_id, content, title) values (2, 1, 15, '감사원은 세입·세출의 결산을 매년 검사하여 대통령과 차년도국회에 그 결과를 보고하여야 한다.
+insert into articles (id, board_id, user_id, content, title) values (2, 1, 15, 'In the course of this life I have had a great many encounters with a great many people who have been concerned with matters of consequence. I have lived a great deal among grown-ups. I have seen them intimately, close at hand. And that hasnt much improved my opinion of them.
 ', 'In Football We Trust');
-insert into articles (id, board_id, user_id, content, title) values (3, 1, 3, '이 헌법공포 당시의 국회의원의 임기는 제1항에 의한 국회의 최초의 집회일 전일까지로 한다.
+insert into articles (id, board_id, user_id, content, title) values (3, 1, 3, 'Whenever I met one of them who seemed to me at all clear-sighted, I tried the experiment of showing him my Drawing Number One, which I have always kept. I would try to find out, so, if this was a person of true understanding. But, whoever it was, he, or she, would always say:
 ', 'Riders of Destiny');
-insert into articles (id, board_id, user_id, content, title) values (4, 2, 5, '국가는 건전한 소비행위를 계도하고 생산품의 품질향상을 촉구하기 위한 소비자보호운동을 법률이 정하는 바에 의하여 보장한다.
+insert into articles (id, board_id, user_id, content, title) values (4, 2, 5, 'That is a hat.
 ', 'Beautiful Thing');
-insert into articles (id, board_id, user_id, content, title) values (5, 1, 6, '모든 국민은 거주·이전의 자유를 가진다. 대통령은 법률에서 구체적으로 범위를 정하여 위임받은 사항과 법률을 집행하기 위하여 필요한 사항에 관하여 대통령령을 발할 수 있다.
+insert into articles (id, board_id, user_id, content, title) values (5, 1, 6, 'Then I would never talk to that person about boa constrictors, or primeval forests, or stars. I would bring myself down to his level. I would talk to him about bridge, and golf, and politics, and neckties. And the grown-up would be greatly pleased to have met such a sensible man.
 ', 'Happy Times (Xingfu shiguang)');
 insert into articles (id, board_id, user_id, content, title) values (6, 1, 8, '모든 국민은 보건에 관하여 국가의 보호를 받는다. 대법원에 대법관을 둔다. 다만, 법률이 정하는 바에 의하여 대법관이 아닌 법관을 둘 수 있다.
 ', 'WUSA');

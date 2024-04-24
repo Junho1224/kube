@@ -29,6 +29,8 @@ public class Article extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
+
+    @Column(name = "content", length = 1024)
     private String content;
 
     @ManyToOne

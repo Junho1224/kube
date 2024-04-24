@@ -27,6 +27,8 @@ public class User extends BaseEntity{
     private String name;
     private String phone;
     private String job;
+
+    @Column(name = "token", length = 512)
     private String token;
 
 

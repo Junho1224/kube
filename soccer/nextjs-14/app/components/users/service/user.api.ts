@@ -92,12 +92,15 @@ export const existsUsernameAPI = async (username: string) => {
         return error
     }
 }
-export const logoutAPI = async ()=>{
+export const logoutAPI = async () => {
     try{
-      const response = await instance().get("/users/logout", {params: {}})
-      console.log('로그아웃 결과 : '+response)
-      return response.data;
-    }catch(error){return error}
-  }
+        const response = await instance().get(`/users/logout`)
+        console.log('logoutAPI 결과: '+ response.data)
+        return response.data
+    }catch(error){
+        console.log(error)
+        return error
+    }
+}
 
   //토큰이 발급 되기 전 날라가는 요청사항을 auth라고 줌

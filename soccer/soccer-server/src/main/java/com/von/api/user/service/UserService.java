@@ -16,7 +16,7 @@ public interface UserService extends CommandService<UserDTO>, QueryService<UserD
     List<UserDTO> findUsersByJob(String job);
     Optional<User> findUserByUsername(String username);
     MessengerVO login(UserDTO param);
-    Boolean logout(Long id);
+    Boolean logout(String id);
     Boolean existsUsername(String username);
     
 

@@ -19,7 +19,7 @@ export default function UserDetailPage (props:any)  {
     const dispatch = useDispatch();  
     const user:IUser = useSelector(getUserById)
     const onDeleted = () => {
-        if (window.confirm("정말 삭제하시겠습니까?")) {
+        if (window.confirm("정말 탈퇴하시겠습니까?")) {
             dispatch(deleteUserById(props.params.id));
             router.push(`${PG.USER}/list`);
         }
@@ -44,7 +44,8 @@ export default function UserDetailPage (props:any)  {
     <span> 전화번호 : <Typography textAlign="center" sx={{fontSize:"3rm"}}> {user.phone}</Typography></span>
     <span> 직업 : <Typography textAlign="center" sx={{fontSize:"3rm"}}> {user.job}</Typography></span>
 
-    <Button onClick={onDeleted} style={{ background: 'red', color: 'white' }}>삭제하기</Button>
+    <Button onClick={onDeleted} style={{ background: 'red', color: 'white' }}>탈퇴하기</Button>
+    <Button onClick={onDeleted} style={{ background: 'red', color: 'white' }}>수정하기</Button>
     
 
 

@@ -21,7 +21,7 @@ import { IArticle } from '@/app/components/articles/model/article';
 
 
 
-export default function WriteArticlePage() {
+export default function UpdateArticlePage() {
   const { register, handleSubmit,formState:{errors}} = useForm()
 
   const router = useRouter();
@@ -97,7 +97,7 @@ export default function WriteArticlePage() {
         onChange={selectHandler}
         id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         {allboards.map((board) => (
-          <option key={board.id} value={board.id}>{board.title}</option>
+          <option key={board.id} title={board.title}>{board.title}</option>
         ))
         }
       </select>

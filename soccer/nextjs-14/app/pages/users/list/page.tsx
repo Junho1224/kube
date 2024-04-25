@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const UsersPage: NextPage = () => {
     const dispatch = useDispatch()
-    const allUsers: [] = useSelector
+    const allUsers = useSelector
     (getAllUsers)
     const count = useSelector(getCountUser)
 

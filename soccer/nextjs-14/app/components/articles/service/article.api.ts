@@ -1,5 +1,5 @@
 import instance from "@/app/components/common/configs/axios-config"
-import IArticle from "../model/article"
+import { IArticle } from "../model/article"
 
 
 export const findAllArticlesAPI = async (page: number)=>{ //axios

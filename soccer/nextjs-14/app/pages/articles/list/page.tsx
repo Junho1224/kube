@@ -45,6 +45,7 @@ const ArticlesPage: NextPage = ({ data }: any) => {
         disableRowSelectionOnClick
       />}
     </Box>
+    
     <thead>
       <tr>
         <td>

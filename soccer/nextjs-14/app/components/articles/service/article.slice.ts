@@ -34,7 +34,7 @@ export const articleSlice = createSlice({
         const { pending, rejected } = status; // 진행중, 거부
 
         builder
-            .addCase(findAllArticles.fulfilled, handleFulfilled) //조건에 맞는 하나 실행 //스위치 fetchAllArticles.fulfilled가 성공했으면 handleFulfilled실행
+            .addCase(findAllArticles.fulfilled, (state: any, { payload }: any) => { state.array = payload }) //조건에 맞는 하나 실행 //스위치 fetchAllArticles.fulfilled가 성공했으면 handleFulfilled실행
             .addCase(findArticleById.fulfilled, (state:any,{payload} : any) => {state.array = payload})
 
 

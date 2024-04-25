@@ -31,29 +31,6 @@ public class AuthInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
 
-        // String token = jwtProvider.extractTokenFromHeader(request);
-        // log.info("1- 인터셉터 토큰 로그 Bearer 포함 : {}", token);
-
-        // if (token.equals("undefined")) {
-        // response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-        // return false;
-        // }
-
-        // Long id = jwtProvider.getPayload(token).get("userId", Long.class); // 클레임에서
-        // 가져올 때 class에서 뽑아와야함 내가 넣은 이름. //
-        // // Long.class 디스크 정적 객체?
-        // log.info("2 - 인터셉터 사용자 id : {}", id);
-
-        // Optional<User> user = repository.findById(id);
-        // log.info("3 - 인터셉터 사용자 정보 : {}", user);
-
-        // if (!user.isPresent()) {
-        // response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-        // return false;
-        // }
-
-        // log.info("4 - 인터셉터 최종 {}", true);
-
         return Stream.of(request)
                 .map(i -> jwtProvider.extractTokenFromHeader(i))
                 .filter(token -> !token.equals("undefined"))

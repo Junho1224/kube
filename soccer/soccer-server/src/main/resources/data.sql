@@ -20,7 +20,7 @@ insert into users (id, username, password, email, name, phone, job) VALUES (15, 
 
 insert into boards (id, title,content,description) values (1, 'QnA','Q&A', 'a01');
 insert into boards (id, title,content, description) VALUES (2, 'Review','리뷰게시판', 'a01');
-insert into boards(id,title,content,description) VALUES (3,'Free','자유게시판',"누구나 사용 가능한 게시판")
+insert into boards(id,title,content,description) VALUES (3,'Free','자유게시판',"누구나 사용 가능한 게시판");
 
 
 insert into articles (id, board_id, user_id, content, title) values (8025, 1, 15, 'In the book it said: "Boa constrictors swallow their prey whole, without chewing it. After that they are not able to move, and they sleep through the six months that they need for digestion."

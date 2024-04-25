@@ -10,19 +10,24 @@ import { IBoard } from '@/app/components/boards/model/board';
 import IArticle from '@/app/components/articles/model/article';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllArticles, getArticleById } from '@/app/components/articles/service/article.slice';
-import { findAllArticles } from '@/app/components/articles/service/article.service';
+import { PG } from '@/app/components/common/enums/PG';
+import { findAllBoards } from '@/app/components/boards/service/board.service';
+import { getAllBoards } from '@/app/components/boards/service/board.slice';
+import { useForm } from 'react-hook-form';
+import { saveArticle } from '@/app/components/articles/service/article.service';
 
 
 
 export default function WriteArticlePage() {
   const router = useRouter();
-  const dispatch = useDispatch(); 
-  // const options: [] = useSelector(getAllArticles)
+  const dispatch = useDispatch();
+  const boards: IBoard[] = useSelector(getAllBoards)
 
-  //   useEffect(() => {  //즉시 실행 함수
-  //       dispatch(findAllArticles(1))
-  //   }, []);
+  const options = [
+    { id: 1, title: "Review", content: "리뷰 게시판" },
+    { id: 2, title: "QnA", content: "Q&A" },
+    { id: 3, title: "Free", content: "자유게시판" }
+  ]
 
   const [content, setContent] = useState("")
   const [article, setArticle] = useState({} as IArticle)
@@ -32,26 +37,35 @@ export default function WriteArticlePage() {
   }
 
   const handelCancel = () => {//Cancel
+    router.back();
 
   }
   const handleSubmit = () => { //POST
+    console.log('user ...' + JSON.stringify(article))
+    dispatch(saveArticle(article))  // writer추가 구현 필요
+    alert("작성 완료")
+    router.push(`${PG.ARTICLE}/list`)
 
   }
   const handleInsertTitle = (e: any) => {
-    
+    setArticle({
+      ...article,
+      title: e.target.value
+    })
+
 
   }
-  const handleInsertText = (e: any) => {
+  const handleInsertContent = (e: any) => {
+    setArticle({
+      ...article,
+      content: e.target.value
 
+    })
   }
 
-  const options = [
-    { id: 1, title: "Review", content: "리뷰 게시판" },
-    { id: 2, title: "QnA", content: "Q&A" },
-    { id: 3, title: "Free", content: "자유게시판" }
-  ]
-
-
+  useEffect(() => {
+    dispatch(findAllBoards())
+  }, [])
 
   return (<>
     <form className="max-w-sm mx-auto">
@@ -59,17 +73,18 @@ export default function WriteArticlePage() {
       <select
         onChange={selectHandler}
         id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        {options.map((item, index) => (
+        {boards.map((item, index) => (
           <option key={item.id} title={item.title}>{item.content}</option>
         ))
 
         }
       </select>
     </form>
+
     <div className="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
       {MyTypography('Article 작성', "1.5rem")}
       <input className="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none" placeholder="Title" type="text" name="title" onChange={handleInsertTitle} />
-      <textarea className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none" placeholder="Describe everything about this post here" name="content" onChange={handleInsertText}></textarea>
+      <textarea className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none" placeholder="Describe everything about this post here" name="content" onChange={handleInsertContent}></textarea>
       {/* <!-- icons --> */}
       <div className="icons flex text-gray-500 m-2">
         <svg className="mr-2 cursor-pointer hover:text-gray-700 border rounded-full p-1 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -93,6 +108,8 @@ export default function WriteArticlePage() {
           onClick={handelCancel}>Cancel</div>
       </div>
     </div>
+    {/* </form> */}
+
   </>
   )
 

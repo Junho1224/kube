@@ -81,7 +81,7 @@ export default function Home() {
                 console.log(jwtDecode<any>(parseCookies().accessToken))
                 
                 router.push('/pages/boards/card')
-                router.refresh()
+                // router.refresh()
             })
             .catch((err: any) => {
               console.log('로그인 실패')

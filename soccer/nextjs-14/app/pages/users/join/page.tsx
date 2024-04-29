@@ -47,7 +47,7 @@ const Join: NextPage = () => {
         const url = `${API.SERVER}/api/users/join`;
         const data = { username, password, name, phone, job }; // 키,밸류가 같으면 생략 가능
 
-        axios.post(url, data, AxiosConfig()).then((res) => {
+        axios.post(url, data).then((res) => {
             alert("리스핀스가 가져온 이름 : " + JSON.stringify(res.data))
             router.push("login");
         });

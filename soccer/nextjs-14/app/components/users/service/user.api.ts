@@ -87,9 +87,12 @@ export const existsUsernameAPI = async (username: string) => {
         const response = await instance().get('/auth/exists-username',{params: {username}})
         console.log('existsUsernameAPI 결과: '+ response.data)
         return response.data
-    }catch(error){
-        console.log(error)
-        return error
+    }catch (error: unknown) {
+        if (error instanceof Error) {
+            console.log('Error', error.message);
+        } else {
+            console.log('An unexpected error occurred');
+        }
     }
 }
 export const logoutAPI = async () => {

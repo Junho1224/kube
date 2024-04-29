@@ -36,7 +36,7 @@ export default function Home() {
     // 영어 대소문자로 시작하는 6 ~20자 의 영어 대소문자 또는 숫자 
     setLen(e.target.value)
     setBeforeSubmit(true)
-    if (ID_CHECK.test(len)) {
+    if (ID_CHECK.test(e.target.valu)) {
       setIsWrongId(false)
       setIsTrueId(true)
       setUser({
@@ -109,22 +109,6 @@ export default function Home() {
     }
 
   }
-
-  // useEffect(() => {
-  //   if (auth.message === 'SUCCESS') {
-  //     setCookie({}, 'message', auth.message, { httpOnly: false, path: '/' })
-  //     setCookie({}, 'token', auth.token, { httpOnly: false, path: '/' })
-  //     console.log('서버에서 넘어온 메시지 ' + parseCookies().message)
-  //     console.log('서버에서 넘어온 토큰 ' + parseCookies().token)
-  //     console.log('토큰을 디코드한 내용 : ')
-  //     console.log(jwtDecode<any>(parseCookies().token))
-  //     router.push('/pages/board/list')
-  //   } else {
-  //     console.log('LOGIN FAIL')
-  //   }
-  // }, [auth])
-
-
 
 
   return (

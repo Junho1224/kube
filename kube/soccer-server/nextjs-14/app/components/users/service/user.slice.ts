@@ -58,8 +58,8 @@ export const userSlice = createSlice({
 })
 
 export const getAllUsers = (state: any) => {
-    console.log('------------------ Before useSelector ---------------')
-    console.log(JSON.stringify(state.user.array)) //array로 받기 때문에 .result 뺌.
+    // console.log('------------------ Before useSelector ---------------')
+    // console.log(JSON.stringify(state.user.array)) //array로 받기 때문에 .result 뺌.
     return state.user.array;
 }
 export const getUserById = (state: any) => (state.user.json) // 

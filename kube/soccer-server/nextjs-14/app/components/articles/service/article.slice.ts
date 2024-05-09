@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { initialState } from './article.init';
-import { findAllArticles, findArticleById } from './article.service';
+import { findAllArticles, findArticleById, findMyList } from './article.service';
 
 
-const articleThunks = [findAllArticles]
+const articleThunks = [findAllArticles,findMyList]
 
 const status = {
     pending: 'pending',
-    fulfilled: 'fullfilld',
+    fulfilled: 'fulfilld',
     rejected: 'rejected'
 }
 
@@ -35,10 +35,10 @@ export const articleSlice = createSlice({
 
         builder
             .addCase(findAllArticles.fulfilled, (state: any, { payload }: any) => { state.array = payload }) //조건에 맞는 하나 실행 //스위치 fetchAllArticles.fulfilled가 성공했으면 handleFulfilled실행
-            .addCase(findArticleById.fulfilled, (state:any,{payload} : any) => {state.array = payload})
-
-
-
+            .addCase(findMyList.fulfilled, handleFulfilled)
+            .addCase(findArticleById.fulfilled, (state: any, { payload }: any) => {
+                state.array = payload;
+              })
             //소스가 늘어날수록 여기가 두꺼워져야함.
             
          
@@ -47,7 +47,7 @@ export const articleSlice = createSlice({
 
 export const getAllArticles = (state: any) => (state.article.array)
 
-export const getArticleById = (state: any) => (state.article.array)
+export const getArticleById = (state: any) => (state.article.array);
 export const { } = articleSlice.actions
 
 export default articleSlice.reducer;

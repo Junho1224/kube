@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { findAllArticlesAPI, findArticleByIdAPI, saveArticleAPI } from "./article.api";
-import IArticle from "../model/article";
+import { findAllArticlesAPI, findArticleByIdAPI, findMyListAPI, saveArticleAPI } from "./article.api";
+import { IArticle } from "../model/article";
 
 
 export const findAllArticles: any = createAsyncThunk(
@@ -30,4 +30,9 @@ export const findArticleById: any = createAsyncThunk(
 export const saveArticle: any = createAsyncThunk(
     'articles/save',
     async (article : IArticle) => await saveArticleAPI(article)
+)
+
+export const findMyList: any = createAsyncThunk(
+    'articles/findMyList',
+    async (id: number) => (await findMyListAPI(id))
 )

@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: api
+  datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql:// 3.36.36.129:3306/vondb?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+      
+      username: root
+      password: root
+  sql:
+    init:
+      platform: mysql
+      mode: always
+   
+  jpa:
+    hibernate:
+      ddl-auto: create
+    
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        jdbc:
+          lob:
+            '[non_contextual_creation]': true
+        '[format_sql]': true
+    show-sql: true
+    defer-datasource-initialization : true
+    # open-in-view : false   
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        type: trace
+jwt:
+  iss: von.com
+  exp: 24 * 60 * 60 * 1000
+  secret: kjhjmtkjhjmtkjhjmtkjhjmtkjhjmtkjhjmtkjhjmtkjhjmtkjhjmt

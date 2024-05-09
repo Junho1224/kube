@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="c6be5821-6b79-4f05-8664-7f2f0dc38232" name="Von">
+        <fileTransfer accessType="SFTP" host="3.36.36.129" port="22" sshConfigId="beec5271-f898-4a1a-8e16-18520ec85dfc" sshConfig="ubuntu@3.36.36.129:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

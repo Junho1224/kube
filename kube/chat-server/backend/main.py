@@ -9,6 +9,10 @@ from dotenv import load_dotenv
 from typing import Optional
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
+
+from app.api.titanic.model.titanic_model import TitanicModel
+from app.main_router import router
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(BASE_DIR, ".env"))
@@ -20,6 +24,8 @@ class Response(BaseModel):
     answer: str
 
 app = FastAPI()
+
+app.include_router(router)
 
 origins = ["*"]
 
@@ -35,7 +41,7 @@ app.add_middleware(
 def read_root():
     return {"Hello": "World"}
 
-@app.post("/chat")
+# @app.post("/chat")
 def chatting(req:Request):
     print('딕셔너리 내용')
     print(req)
@@ -58,8 +64,14 @@ def chatting(req:Request):
 
     # print('[답변] : ', response.predict_messages(message))
     # print(f'[답변] : {response.predict(req.get("question"))}')
-    return Response(answer=response.predict(req.question))
+    answer=response.predict(req.question)
+    print(answer)
+    return Response(answer)
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: str = None):
     return {"item_id": item_id, "q": q}
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="localhost", port=8000)

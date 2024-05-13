@@ -5,4 +5,4 @@ from fastapi import APIRouter
 
 router = APIRouter()
 
-router.include_router(titanic_router)
+router.include_router(titanic_router, prefix="/chat")

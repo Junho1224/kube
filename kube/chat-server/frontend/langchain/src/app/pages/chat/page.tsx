@@ -1,126 +1,230 @@
-export default function chatMain() {
+"use client"
+
+import Image from "next/image";
+import { useState } from 'react';
+import { useForm, SubmitHandler } from "react-hook-form"
+
+const chatMain = () => {
+  const [messages, setMessages] = useState('')
+  const [input, setInput] = useState('');
+
+  type Inputs = {
+    question: string
+    exampleRequired?: string
+  }
+
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>()
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log('입력된 값 : ' + JSON.stringify(data))
+    fetch('http://localhost:8000/api/chat/titanic', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json()) // JSON 형식으로 파싱
+      .then((data) => {
+        console.log("서버 응답:", data); // 서버 응답 로그 출력
+        setMessages(data.answer); // 받은 응답을 상태에 저장
+      })
+      .catch((error) => console.log("error:", error));
+  }
+
 
   return (<>
 
 
-    <div className="w-[1440px] h-[1024px] bg-white rounded-3xl justify-center items-start inline-flex">
-      <div className="self-stretch bg-white border-r border-zinc-900/opacity-10 flex-col justify-between items-start inline-flex">
-        <div className="h-[236px] p-5 flex-col justify-start items-start gap-1 flex">
-          <div className="self-stretch px-4 py-2 bg-zinc-900 rounded-xl justify-center items-center gap-2 inline-flex">
-            <div className="rounded-lg justify-center items-center gap-1 flex">
-              <div className="w-5 h-5 p-[3.75px] justify-center items-center flex" />
+    <div className="flex h-screen antialiased text-gray-800">
+      <div className="flex flex-row h-full w-full overflow-x-hidden">
+        <div className="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0">
+          <div className="flex flex-row items-center justify-center h-12 w-full">
+            <div
+              className="flex items-center justify-center rounded-2xl text-indigo-700 bg-indigo-100 h-10 w-10"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+                ></path>
+              </svg>
             </div>
-            <div className="rounded-lg flex-col justify-center items-start inline-flex">
-              <div className="self-stretch text-center text-white text-lg font-normal font-['Inter'] leading-normal">New chat</div>
+            <div className="ml-2 font-bold text-2xl">Chat</div>
+          </div>
+          <div
+            className="flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg"
+          >
+            <div className="h-20 w-20 rounded-full border overflow-hidden">
+              <img
+                src="C:/Users/bitcamp/vonteam-kuber/kube/chat-server/frontend/langchain/src/app/style/me.jpg"
+                alt="Avatar"
+                className="h-full w-full"
+              />
+            </div>
+            <div className="text-sm font-semibold mt-2">Junho Ko</div>
+            <div className="text-xs text-gray-500">Lead UI/UX Designer</div>
+            <div className="flex flex-row items-center mt-3">
+              <div
+                className="flex flex-col justify-center h-4 w-8 bg-indigo-500 rounded-full"
+              >
+                <div className="h-3 w-3 bg-white rounded-full self-end mr-1"></div>
+              </div>
+              <div className="leading-none ml-1 text-xs">Active</div>
             </div>
           </div>
-          <div className="self-stretch p-3 rounded-lg justify-start items-center gap-2 inline-flex">
-            <div className="grow shrink basis-0 h-6 rounded-lg justify-start items-center gap-3 flex">
-              <div className="rounded-lg justify-center items-center flex">
-                <div className="w-6 h-6 px-[2.25px] pt-[4.50px] pb-[1.50px] justify-center items-center flex" />
-              </div>
-              <div className="grow shrink basis-0 rounded-lg flex-col justify-center items-start inline-flex">
-                <div className="self-stretch text-zinc-900 text-sm font-normal font-['Inter'] leading-tight">AI Chat Tool Ethics</div>
-              </div>
+          <div className="flex flex-col mt-8">
+            <div className="flex flex-row items-center justify-between text-xs">
+              <span className="font-bold">Active Conversations</span>
+              <span
+                className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full"
+              >갯수</span>
             </div>
-          </div>
-          <div className="self-stretch p-3 rounded-lg justify-start items-center gap-2 inline-flex">
-            <div className="grow shrink basis-0 h-6 rounded-lg justify-start items-center gap-3 flex">
-              <div className="rounded-lg justify-center items-center flex">
-                <div className="w-6 h-6 px-[2.25px] pt-[4.50px] pb-[1.50px] justify-center items-center flex" />
-              </div>
-              <div className="grow shrink basis-0 rounded-lg flex-col justify-center items-start inline-flex">
-                <div className="self-stretch text-zinc-900 text-sm font-normal font-['Inter'] leading-tight">Al Chat Tool Impact Writing</div>
-              </div>
+            <div className="flex flex-col space-y-1 mt-4 -mx-2 h-48 overflow-y-auto">
+              <button
+                className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2"
+              >
+                <div
+                  className="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full"
+                >
+                  H
+                </div>
+                <div className="ml-2 text-sm font-semibold">Henry Boyd</div>
+              </button>
+
             </div>
-          </div>
-          <div className="self-stretch p-3 rounded-lg justify-start items-center gap-2 inline-flex">
-            <div className="grow shrink basis-0 h-6 rounded-lg justify-start items-center gap-3 flex">
-              <div className="rounded-lg justify-center items-center flex">
-                <div className="w-6 h-6 px-[2.25px] pt-[4.50px] pb-[1.50px] justify-center items-center flex" />
-              </div>
-              <div className="grow shrink basis-0 rounded-lg flex-col justify-center items-start inline-flex">
-                <div className="self-stretch text-zinc-900 text-sm font-normal font-['Inter'] leading-tight">New chat</div>
-              </div>
+            <div className="flex flex-row items-center justify-between text-xs mt-6">
+              <span className="font-bold">Archivied</span>
+            </div>
+            <div className="flex flex-col space-y-1 mt-4 -mx-2">
+              <button
+                className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2"
+              >
+                <div
+                  className="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full"
+                >
+                  H
+                </div>
+                <div className="ml-2 text-sm font-semibold">Henry Boyd</div>
+              </button>
             </div>
           </div>
         </div>
-        <div className="h-[296px] p-5 border-t border-zinc-900/opacity-10 flex-col justify-start items-start gap-1 flex">
-          <div className="self-stretch p-3 rounded-lg justify-start items-center gap-2 inline-flex">
-            <div className="grow shrink basis-0 h-6 rounded-lg justify-start items-center gap-3 flex">
-              <div className="rounded-lg justify-center items-center flex">
-                <div className="w-6 h-6 px-[3px] pt-[1.50px] pb-[3px] justify-center items-center flex" />
-              </div>
-              <div className="grow shrink basis-0 rounded-lg flex-col justify-center items-start inline-flex">
-                <div className="self-stretch text-zinc-900 text-sm font-normal font-['Inter'] leading-tight">Clear conversations</div>
-              </div>
-            </div>
-          </div>
-          <div className="self-stretch p-3 rounded-lg justify-start items-center gap-2 inline-flex">
-            <div className="grow shrink basis-0 h-6 rounded-lg justify-start items-center gap-3 flex">
-              <div className="rounded-lg justify-center items-center flex">
-                <div className="w-6 h-6 p-[0.75px] justify-center items-center flex" />
-              </div>
-              <div className="grow shrink basis-0 rounded-lg flex-col justify-center items-start inline-flex">
-                <div className="self-stretch text-zinc-900 text-sm font-normal font-['Inter'] leading-tight">Light mode</div>
-              </div>
-            </div>
-          </div>
-          <div className="self-stretch p-3 rounded-lg justify-start items-center gap-2 inline-flex">
-            <div className="grow shrink basis-0 h-6 rounded-lg justify-start items-center gap-3 flex">
-              <div className="rounded-lg justify-center items-center flex">
-                <div className="w-6 h-6 px-[2.24px] pt-[2.25px] pb-[2.98px] justify-center items-center flex" />
-              </div>
-              <div className="grow shrink basis-0 rounded-lg flex-col justify-center items-start inline-flex">
-                <div className="self-stretch text-zinc-900 text-sm font-normal font-['Inter'] leading-tight">My  account</div>
-              </div>
-            </div>
-          </div>
-          <div className="self-stretch p-3 rounded-lg justify-start items-center gap-2 inline-flex">
-            <div className="grow shrink basis-0 h-6 rounded-lg justify-start items-center gap-3 flex">
-              <div className="rounded-lg justify-center items-center flex">
-                <div className="w-6 h-6 p-[3px] justify-center items-center flex" />
-              </div>
-              <div className="grow shrink basis-0 rounded-lg flex-col justify-center items-start inline-flex">
-                <div className="self-stretch text-zinc-900 text-sm font-normal font-['Inter'] leading-tight">Updates & FAQ</div>
-              </div>
-            </div>
-          </div>
-          <div className="self-stretch p-3 rounded-lg justify-start items-center gap-2 inline-flex">
-            <div className="grow shrink basis-0 h-6 rounded-lg justify-start items-center gap-3 flex">
-              <div className="rounded-lg justify-center items-center flex">
-                <div className="w-6 h-6 p-[3px] justify-center items-center flex" />
-              </div>
-              <div className="grow shrink basis-0 rounded-lg flex-col justify-center items-start inline-flex">
-                <div className="self-stretch text-zinc-900 text-sm font-normal font-['Inter'] leading-tight">Log out</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="grow shrink basis-0 self-stretch pt-[260px] flex-col justify-start items-center gap-4 inline-flex">
-        <div style={{ margin: "3px", padding: "10px" }} className="h-[116px] pt-5 pb-10 bg-white/opacity-40 backdrop-blur-[100px] flex-col justify-start items-center flex">
-          <div className="w-[800px] h-14 px-5 py-4 bg-slate-50 rounded-2xl flex-col justify-center items-start gap-1 flex">
-            <div className="self-stretch rounded-lg justify-start items-center gap-2 inline-flex">
-              <div className="grow shrink basis-0 h-7 rounded-lg justify-start items-center gap-4 flex">
-                <div className="rounded-lg justify-start items-center gap-2 flex">
-                  <div className="p-1 rounded-lg justify-center items-center gap-1 flex">
-                    <div className="rounded-lg justify-center items-center gap-1 flex">
-                      <div className="w-5 h-5 px-[3.75px] py-[1.25px] justify-center items-center flex" />
+        <div className="flex flex-col flex-auto h-full p-6">
+          <div
+            className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4"
+          >
+            <div className="flex flex-col h-full overflow-x-auto mb-4">
+              <div className="flex flex-col h-full">
+                <div className="grid grid-cols-12 gap-y-2">
+
+                  <div className="col-start-6 col-end-13 p-3 rounded-lg">
+                    <div className="flex items-center justify-start flex-row-reverse">
+                      <div
+                        className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
+                      >
+                        Me
+                      </div>
+                      <div
+                        className="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl"
+                      >
+                        <div>여기 질문 들어가고?</div>
+                      </div>
                     </div>
                   </div>
-                  <div className="p-1 rounded-lg justify-center items-center gap-1 flex">
-                    <div className="rounded-lg justify-center items-center gap-1 flex">
-                      <div className="w-5 h-5 px-[1.88px] py-[3.12px] justify-center items-center flex" />
+                  <div className="col-start-1 col-end-8 p-3 rounded-lg">
+                    <div className="flex flex-row items-center">
+                      <div
+                        className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
+                      >
+                        A
+                      </div>
+                      <div
+                        className="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
+                      >
+                        <div>{messages ? messages : ""}</div>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="grow shrink basis-0 rounded-lg flex-col justify-center items-start inline-flex">
-                  <div className="self-stretch text-zinc-900/opacity-20 text-sm font-normal font-['Inter'] leading-tight">Type message</div>
-                </div>
               </div>
-              <div className="rounded-lg justify-center items-center flex">
-                <div className="w-5 h-5 pl-[2.50px] pr-[1.87px] pt-[1.26px] pb-[1.25px] justify-center items-center flex" />
+            </div>
+            <div
+              className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4"
+            >
+              <div>
+                <button
+                  className="flex items-center justify-center text-gray-400 hover:text-gray-600"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+              <div className="flex-grow ml-4">
+                <form>
+                  <div className="relative w-full">
+                    {/* input */}
+                    <input
+                      type="text"
+                      // value={message}
+                      // onChange={(event) => setMessage(event.target.value)}
+                      {...register("question", { required: true })}
+                      placeholder="메시지를 입력하세요"
+                      className="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
+                    />
+                  </div>
+                </form>
+              </div>
+
+              <div className="ml-4">
+                <button
+                  type="button" // 버튼 타입을 "button"으로 지정하여 기본 동작 방지
+                  onClick={handleSubmit(onSubmit)} // onClick 이벤트로 handleSubmit 호출
+                  className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
+                >
+                  <span>Send</span>
+                  <span className="ml-2">
+                    <svg
+                      className="w-4 h-4 transform rotate-45 -mt-px"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                      ></path>
+                    </svg>
+                  </span>
+                </button>
               </div>
             </div>
           </div>
@@ -134,3 +238,5 @@ export default function chatMain() {
 
 
 }
+
+export default chatMain;

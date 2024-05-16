@@ -20,8 +20,8 @@ async def titanic(req:Request):
     # print(data)
 
     service = TitanicService()
-    service.process()
+    service.preprocess()
     
    
-    
-    return Response(answer="타이타닉 생존자 수는 100명 입니다.")
+    # return Response(answer="타이타닉 생존자 수는 100명 입니다.")
+    return Response(answer=f"The accuracy of {req.question} Titanic model is {service.learning(service.modeling(req.question), req.question)}%")
